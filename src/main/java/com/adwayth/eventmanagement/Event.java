@@ -1,14 +1,18 @@
 package com.adwayth.eventmanagement;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "events")
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int eventid;
+    //@Column(name ="eventId")
+    private int eventId;
 
+    //@Column(name = "eventName")
     private String eventName;
     private String venue;
 
@@ -17,7 +21,7 @@ public class Event {
 
     }
     public int getEventId(){
-        return eventid;
+        return eventId;
     }
 
     public String getEventName(){
@@ -29,7 +33,7 @@ public class Event {
     }
 
     public void setEventId(int eventId){
-        this.eventid= eventId;
+        this.eventId= eventId;
     }
 
     public void setEventName(String eventName){
