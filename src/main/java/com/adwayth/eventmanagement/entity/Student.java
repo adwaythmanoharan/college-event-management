@@ -1,4 +1,4 @@
-package com.adwayth.eventmanagement;
+package com.adwayth.eventmanagement.entity;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
