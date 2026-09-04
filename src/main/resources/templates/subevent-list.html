@@ -54,12 +54,20 @@
 
     <div class="list-group">
 
-        <div class="list-group-item"
+        
+        
+        <div class="list-group-item d-flex justify-content-between align-items-center"
              th:each="subEvent : ${subEvents}">
 
-            <h5 th:text="${subEvent.subEventName}">
-                Vadamvali
-            </h5>
+             <h5 class="mb-0"
+            th:text="${subEvent.subEventName}">
+            Vadamvali
+        </h5>
+
+          <a th:href="@{/register(eventId=${event.eventId}, subEventId=${subEvent.subEventId})}"
+           class="btn btn-primary">
+            Register
+        </a>
 
         </div>
 

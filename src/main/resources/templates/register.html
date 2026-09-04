@@ -40,10 +40,7 @@
                     Event Name
                 </h4>
 
-                <p class="text-muted mb-1">
-                    <strong>Student ID:</strong>
-                    <span th:text="${studentId}">1</span>
-                </p>
+               
 
                 <p class="text-muted mb-1">
                     <strong>Event ID:</strong>
@@ -59,11 +56,19 @@
             <div th:if="${error}" class="alert alert-danger" th:text="${error}">
 </div>
 
+<h4 th:text="${subEvent.subEventName}">
+    Vadamvali
+</h4>
+
             <form action="/register" method="post">
 
                 <input type="hidden"
                        name="eventId"
                        th:value="${event.eventId}">
+
+                 <input type="hidden"
+           name="subEventId"
+           th:value="${subEvent.subEventId}">       
 
                 <button type="submit"
                         class="btn btn-primary w-100">

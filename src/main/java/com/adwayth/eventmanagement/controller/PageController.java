@@ -82,7 +82,7 @@ public class PageController {
     }
 
     @GetMapping("/register")
-    public String registrationPage(@org.springframework.web.bind.annotation.RequestParam int eventId,
+    public String registrationPage(@org.springframework.web.bind.annotation.RequestParam int eventId, @RequestParam int subEventId,
 Model model,HttpSession session){
 
      Integer studentId = (Integer) session.getAttribute("studentId");
@@ -93,6 +93,13 @@ Model model,HttpSession session){
 
         Event event = eventRepository.findById(eventId).orElse(null);
 
+        SubEvent subEvent =
+        subEventRepository.findById(subEventId).orElse(null);
+
+if (subEvent == null) {
+    return "redirect:/event-list";
+}
+        model.addAttribute("subEvent", subEvent);
         model.addAttribute("event", event);
 
         return "register";
@@ -103,7 +110,7 @@ Model model,HttpSession session){
 
     @PostMapping("/register")
 public String submitRegistration(
-        @RequestParam int eventId,
+        @RequestParam int eventId,@RequestParam int subEventId,
         HttpSession session,Model model) {
 
                 Integer studentId = (Integer) session.getAttribute("studentId");
@@ -126,6 +133,7 @@ public String submitRegistration(
 
     registration.setStudentId(studentId);
     registration.setEventId(eventId);
+    registration.setSubEventId(subEventId);
 
     registrationRepository.save(registration);
 
