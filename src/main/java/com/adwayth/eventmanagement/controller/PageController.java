@@ -66,6 +66,10 @@ public class PageController {
 
         Integer studentId=(Integer) session.getAttribute("studentId");
 
+        if (studentId == null) {
+        return "redirect:/";
+    }
+
         model.addAttribute("studentId",studentId);
 
 
@@ -74,7 +78,13 @@ public class PageController {
 
     @GetMapping("/register")
     public String registrationPage(@org.springframework.web.bind.annotation.RequestParam int eventId,
-Model model){
+Model model,HttpSession session){
+
+     Integer studentId = (Integer) session.getAttribute("studentId");
+
+                 if (studentId == null) {
+        return "redirect:/";
+    }
 
         Event event = eventRepository.findById(eventId).orElse(null);
 
@@ -118,13 +128,29 @@ public String submitRegistration(
 }
     
 @GetMapping("/registration-list")
-public String registrationListPage(Model model) {
+public String registrationListPage(HttpSession session,Model model) {
 
-    List<Registration> registrations = registrationRepository.findAll();
+    Integer studentId= (Integer) session.getAttribute("studentId");
+
+    if(studentId==null)
+    {
+        return "redirect:/";
+    }
+
+    List<Registration> registrations = registrationRepository.findByStudentId(studentId);
 
     model.addAttribute("registrations", registrations);
 
     return "registration-list";
+}
+
+@GetMapping("/logout")
+public String Logout(HttpSession session){
+
+session.invalidate();
+
+return "redirect:/";
+
 }
 
 }

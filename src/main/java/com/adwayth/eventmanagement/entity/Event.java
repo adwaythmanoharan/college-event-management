@@ -1,7 +1,6 @@
 package com.adwayth.eventmanagement.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "events")
@@ -15,6 +14,7 @@ public class Event {
     //@Column(name = "eventName")
     private String eventName;
     private String venue;
+    private String imageUrl;
 
     public Event()
     {
@@ -43,6 +43,14 @@ public class Event {
     public void setVenue(String venue){
         this.venue= venue;
     }
+
+    public String getImageUrl(){
+    return imageUrl;
+}
+
+    public void setImageUrl(String imageUrl){
+    this.imageUrl = imageUrl;
+}
 
 
 }
