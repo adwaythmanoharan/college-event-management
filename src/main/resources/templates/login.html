@@ -99,15 +99,24 @@
         <p>College Event Management System</p>
     </div>
 
-    <form action="/events" method="get">
+    <div th:if="${error}"
+     class="alert alert-danger"
+     th:text="${error}">
+</div>
 
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username"
-               placeholder="Enter your username" required>
+    <form action="/login" method="post">
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password"
-               placeholder="Enter your password" required>
+       <input type="number"
+       name="studentId"
+       class="form-control"
+       placeholder="Enter your Student ID"
+       required>
+
+<input type="password"
+       name="password"
+       class="form-control"
+       placeholder="Enter your Password"
+       required>
 
         <button type="submit">Login</button>
 

@@ -1,7 +1,6 @@
 package com.adwayth.eventmanagement.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "students")
@@ -14,6 +13,8 @@ public class Student {
     private String studentName;
     
     private String department;
+
+    private String password;
 
     public Student()
     {
@@ -50,6 +51,13 @@ public class Student {
         this.department=department;
     }
 
+    public String getPassword() {
+    return password;
+}
+
+public void setPassword(String password) {
+    this.password = password;
+}
 
 
 
