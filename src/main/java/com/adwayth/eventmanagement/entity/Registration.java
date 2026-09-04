@@ -13,6 +13,8 @@ public class Registration {
 
     private int eventId;
 
+    private int subEventId;
+
     public Registration()
     {
 
@@ -43,4 +45,12 @@ public class Registration {
     public void setEventId(int eventId) {
         this.eventId = eventId;
     }
+
+    public int getSubEventId() {
+    return subEventId;
+}
+
+    public void setSubEventId(int subEventId) {
+    this.subEventId = subEventId;
+}
 }

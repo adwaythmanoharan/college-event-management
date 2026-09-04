@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Sub Events - CampusConnect</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/event-list">
+            CampusConnect
+        </a>
+
+        <div>
+
+            <a href="/event-list"
+               class="btn btn-light btn-sm me-2">
+                Events
+            </a>
+
+            <a href="/registration-list"
+               class="btn btn-outline-light btn-sm me-2">
+                My Registrations
+            </a>
+
+            <a href="/logout"
+               class="btn btn-outline-light btn-sm">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+</nav>
+
+
+<div class="container mt-5">
+
+    <h2 class="mb-4"
+    th:text="${event.eventName + ' Sub-events'}">
+    Onam Sub-events
+</h2>
+
+<p class="text-muted"
+   th:text="${event.venue}">
+    Venue
+</p>
+
+    <div class="list-group">
+
+        <div class="list-group-item"
+             th:each="subEvent : ${subEvents}">
+
+            <h5 th:text="${subEvent.subEventName}">
+                Vadamvali
+            </h5>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

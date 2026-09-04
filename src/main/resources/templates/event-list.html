@@ -73,10 +73,11 @@
             <div class="card h-100 shadow-sm border-0">
 
                 <div class="card-body">
-
+                    <a th:href="@{/subevents(eventId=${event.eventId})}">
                     <img th:src="${event.imageUrl}"
                         class="card-img-top event-image"
                          alt="Event Image">
+                </a>
 
                     <h5 class="card-title fw-bold"
                         th:text="${event.eventName}">
@@ -97,9 +98,9 @@
                         </span>
                     </p>
 
-                    <a th:href="@{/register(eventId=${event.eventId})}"
+                    <a th:href="@{/subevents(eventId=${event.eventId})}"
    class="btn btn-primary w-100">
-    Register
+    View Sub-events
 </a>
 
                 </div>

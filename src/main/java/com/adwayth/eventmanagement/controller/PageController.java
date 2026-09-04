@@ -12,11 +12,13 @@ import com.adwayth.eventmanagement.entity.Event;
 import com.adwayth.eventmanagement.repository.EventRepository;
 import com.adwayth.eventmanagement.repository.RegistrationRepository;
 import com.adwayth.eventmanagement.repository.StudentRepository;
+import com.adwayth.eventmanagement.repository.SubEventRepository;
 
 import jakarta.servlet.http.HttpSession;
 
 import com.adwayth.eventmanagement.entity.Registration;
 import com.adwayth.eventmanagement.entity.Student;
+import com.adwayth.eventmanagement.entity.SubEvent;
 
 
 
@@ -26,12 +28,15 @@ public class PageController {
     private final EventRepository eventRepository;
     private final RegistrationRepository registrationRepository;
     private final StudentRepository studentRepository;
+    private final SubEventRepository subEventRepository;
 
-    public PageController(EventRepository eventRepository,RegistrationRepository registrationRepository,StudentRepository studentRepository)
+    public PageController(EventRepository eventRepository,RegistrationRepository registrationRepository,StudentRepository studentRepository,SubEventRepository subEventRepository
+)
     {
         this.eventRepository=eventRepository;
         this.registrationRepository=registrationRepository;
         this.studentRepository=studentRepository;
+        this.subEventRepository=subEventRepository;
     }
 
     @GetMapping("/")
@@ -151,6 +156,30 @@ session.invalidate();
 
 return "redirect:/";
 
+}
+
+@GetMapping("/subevents")
+public String SubEvents(@RequestParam int eventId,HttpSession session,Model model){
+
+    Integer studentId= (Integer) session.getAttribute("studentId");
+
+    if(studentId==null)
+    {
+        return "redirect:/";
+    }
+
+     Event event = eventRepository.findById(eventId).orElse(null);
+
+    if (event == null) {
+        return "redirect:/event-list";
+    }
+
+    List<SubEvent> subEvents= subEventRepository.findByEventId(eventId);
+
+    model.addAttribute("event", event);
+    model.addAttribute("subEvents", subEvents);
+
+    return "subevent-list";
 }
 
 }
