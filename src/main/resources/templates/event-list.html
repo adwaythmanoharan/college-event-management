@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CampusConnect - Events</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= HERO ================= */
+
+        .dashboard-hero {
+            background: linear-gradient(135deg, #0d6efd, #4f8dfd);
+            border-radius: 20px;
+            color: white;
+            padding: 38px 42px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(13, 110, 253, 0.18);
+        }
+
+        .dashboard-hero h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-hero p {
+            margin-bottom: 0;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        /* ================= STAT CARDS ================= */
+
+        .stat-card {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            padding: 22px;
+            height: 100%;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+            transition: 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            background: #eaf2ff;
+            margin-bottom: 12px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section-block {
+            margin-top: 42px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .section-subtitle {
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        /* ================= EVENT CARD ================= */
+
+        .event-card {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 20px;
+        }
+
+        .event-title {
+            font-size: 21px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .event-venue {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .status-upcoming {
+            background: #e7f0ff;
+            color: #0d6efd;
+        }
+
+        .status-current {
+            background: #e7f8ef;
+            color: #198754;
+        }
+
+        .status-closed {
+            background: #eeeeee;
+            color: #6c757d;
+        }
+
+        .status-unscheduled {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* ================= DATE/TIME ================= */
+
+        .event-schedule {
+            background: #f6f8fc;
+            border: 1px solid #edf0f5;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 15px;
+        }
+
+        .schedule-row {
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 5px;
+        }
+
+        .schedule-row:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ================= ACTIVITY ================= */
+
+        .event-details-box {
+            background: #f6f8fc;
+            border: 1px solid #edf0f5;
+            border-radius: 12px;
+            padding: 13px 15px;
+            margin-bottom: 18px;
+        }
+
+        .activity-count {
+            display: flex;
+            align-items: center;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e7f0ff;
+            border-radius: 10px;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .activity-number {
+            font-weight: 700;
+            font-size: 17px;
+            line-height: 1.2;
+        }
+
+        .activity-label {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .event-button {
+            width: 100%;
+            border-radius: 9px;
+            padding: 10px;
+            font-weight: 600;
+        }
+
+        /* ================= CLOSED BUTTON ================= */
+
+        .closed-button {
+            width: 100%;
+            border-radius: 9px;
+            padding: 10px;
+            font-weight: 600;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty-events {
+            background: white;
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div th:replace="~{navbar :: studentNavbar}"></div>
+
+
+<div class="container pb-5">
+
+    <!-- ================= HERO ================= -->
+
+    <div class="dashboard-hero">
+
+        <h1>
+            Welcome back,
+            <span th:text="${studentName}">
+                Student
+            </span>
+            👋
+        </h1>
+
+        <p>
+            Discover college events, explore activities,
+            and register for the ones you love.
+        </p>
+
+    </div>
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-4">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🎪
+                </div>
+
+                <div class="stat-number"
+                     th:text="${events.size()}">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Available Events
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✅
+                </div>
+
+                <div class="stat-number"
+                     th:text="${myRegistrationCount}">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    My Registrations
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🎯
+                </div>
+
+                <div class="stat-number"
+                     th:text="${totalSubEventCount}">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Activities Available
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- UPCOMING EVENTS -->
+    <!-- ================================================= -->
+
+    <div class="section-block">
+
+        <div class="section-title">
+            Upcoming Events
+        </div>
+
+        <div class="section-subtitle">
+            Events scheduled for the future.
+        </div>
+
+        <div class="row g-4">
+
+            <th:block th:each="event : ${events}">
+
+                <div class="col-lg-4 col-md-6"
+                     th:if="${eventStatuses[event.eventId] == 'UPCOMING'}">
+
+                    <div class="event-card">
+
+                        <img th:src="${event.imageUrl}"
+                             class="event-image"
+                             alt="Event Image">
+
+                        <div class="event-content">
+
+                            <span class="status-badge status-upcoming">
+                                🔵 UPCOMING
+                            </span>
+
+                            <div class="event-title"
+                                 th:text="${event.eventName}">
+                                Event
+                            </div>
+
+                            <div class="event-venue">
+
+                                📍
+                                <span th:text="${event.venue}">
+                                    Venue
+                                </span>
+
+                            </div>
+
+
+                            <!-- DATE/TIME -->
+
+                            <div class="event-schedule">
+
+                                <div class="schedule-row">
+
+                                    📅
+
+                                    <strong>Starts:</strong>
+
+                                    <span th:if="${event.startDateTime != null}"
+                                          th:text="${#temporals.format(event.startDateTime, 'dd MMM yyyy, hh:mm a')}">
+                                    </span>
+
+                                </div>
+
+                                <div class="schedule-row">
+
+                                    🏁
+
+                                    <strong>Ends:</strong>
+
+                                    <span th:if="${event.endDateTime != null}"
+                                          th:text="${#temporals.format(event.endDateTime, 'dd MMM yyyy, hh:mm a')}">
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ACTIVITIES -->
+
+                            <div class="event-details-box">
+
+                                <div class="activity-count">
+
+                                    <span class="activity-icon">
+                                        🎯
+                                    </span>
+
+                                    <div>
+
+                                        <div class="activity-number"
+                                             th:text="${subEventCounts[event.eventId]}">
+                                            0
+                                        </div>
+
+                                        <div class="activity-label">
+                                            Activities Available
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <a th:href="@{/subevents(eventId=${event.eventId})}"
+                               class="btn btn-primary event-button">
+
+                                View Activities →
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </th:block>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CURRENT EVENTS -->
+    <!-- ================================================= -->
+
+    <div class="section-block">
+
+        <div class="section-title">
+            Current Events
+        </div>
+
+        <div class="section-subtitle">
+            Events that are currently happening.
+        </div>
+
+        <div class="row g-4">
+
+            <th:block th:each="event : ${events}">
+
+                <div class="col-lg-4 col-md-6"
+                     th:if="${eventStatuses[event.eventId] == 'CURRENT'}">
+
+                    <div class="event-card">
+
+                        <img th:src="${event.imageUrl}"
+                             class="event-image"
+                             alt="Event Image">
+
+                        <div class="event-content">
+
+                            <span class="status-badge status-current">
+                                🟢 CURRENT
+                            </span>
+
+                            <div class="event-title"
+                                 th:text="${event.eventName}">
+                                Event
+                            </div>
+
+                            <div class="event-venue">
+
+                                📍
+                                <span th:text="${event.venue}">
+                                    Venue
+                                </span>
+
+                            </div>
+
+
+                            <div class="event-schedule">
+
+                                <div class="schedule-row">
+
+                                    📅
+
+                                    <strong>Started:</strong>
+
+                                    <span th:if="${event.startDateTime != null}"
+                                          th:text="${#temporals.format(event.startDateTime, 'dd MMM yyyy, hh:mm a')}">
+                                    </span>
+
+                                </div>
+
+                                <div class="schedule-row">
+
+                                    🏁
+
+                                    <strong>Ends:</strong>
+
+                                    <span th:if="${event.endDateTime != null}"
+                                          th:text="${#temporals.format(event.endDateTime, 'dd MMM yyyy, hh:mm a')}">
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="event-details-box">
+
+                                <div class="activity-count">
+
+                                    <span class="activity-icon">
+                                        🎯
+                                    </span>
+
+                                    <div>
+
+                                        <div class="activity-number"
+                                             th:text="${subEventCounts[event.eventId]}">
+                                            0
+                                        </div>
+
+                                        <div class="activity-label">
+                                            Activities Available
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <a th:href="@{/subevents(eventId=${event.eventId})}"
+                               class="btn btn-success event-button">
+
+                                View Activities →
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </th:block>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CLOSED EVENTS -->
+    <!-- ================================================= -->
+
+    <div class="section-block">
+
+        <div class="section-title">
+            Closed Events
+        </div>
+
+        <div class="section-subtitle">
+            Events that have already ended.
+        </div>
+
+        <div class="row g-4">
+
+            <th:block th:each="event : ${events}">
+
+                <div class="col-lg-4 col-md-6"
+                     th:if="${eventStatuses[event.eventId] == 'CLOSED'}">
+
+                    <div class="event-card">
+
+                        <img th:src="${event.imageUrl}"
+                             class="event-image"
+                             alt="Event Image">
+
+                        <div class="event-content">
+
+                            <span class="status-badge status-closed">
+                                ⚫ CLOSED
+                            </span>
+
+                            <div class="event-title"
+                                 th:text="${event.eventName}">
+                                Event
+                            </div>
+
+                            <div class="event-venue">
+
+                                📍
+                                <span th:text="${event.venue}">
+                                    Venue
+                                </span>
+
+                            </div>
+
+
+                            <div class="event-schedule">
+
+                                <div class="schedule-row">
+
+                                    📅
+
+                                    <strong>Event Date:</strong>
+
+                                    <span th:if="${event.startDateTime != null}"
+                                          th:text="${#temporals.format(event.startDateTime, 'dd MMM yyyy')}">
+                                    </span>
+
+                                </div>
+
+                                <div class="schedule-row">
+
+                                    🏁
+
+                                    <strong>Ended:</strong>
+
+                                    <span th:if="${event.endDateTime != null}"
+                                          th:text="${#temporals.format(event.endDateTime, 'dd MMM yyyy, hh:mm a')}">
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="event-details-box">
+
+                                <div class="activity-count">
+
+                                    <span class="activity-icon">
+                                        🎯
+                                    </span>
+
+                                    <div>
+
+                                        <div class="activity-number"
+                                             th:text="${subEventCounts[event.eventId]}">
+                                            0
+                                        </div>
+
+                                        <div class="activity-label">
+                                            Activities
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <button class="btn btn-secondary closed-button"
+                                    disabled>
+
+                                Event Closed
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </th:block>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= UNSCHEDULED ================= -->
+
+    <div class="section-block"
+         th:if="${events.?[eventStatuses[eventId] == 'UNSCHEDULED'].size() > 0}">
+
+        <div class="section-title">
+            Events Without Schedule
+        </div>
+
+        <div class="section-subtitle">
+            These events need a date and time assigned by the administrator.
+        </div>
+
+        <div class="row g-4">
+
+            <th:block th:each="event : ${events}">
+
+                <div class="col-lg-4 col-md-6"
+                     th:if="${eventStatuses[event.eventId] == 'UNSCHEDULED'}">
+
+                    <div class="event-card">
+
+                        <img th:src="${event.imageUrl}"
+                             class="event-image"
+                             alt="Event Image">
+
+                        <div class="event-content">
+
+                            <span class="status-badge status-unscheduled">
+                                ⚠ UNSCHEDULED
+                            </span>
+
+                            <div class="event-title"
+                                 th:text="${event.eventName}">
+                                Event
+                            </div>
+
+                            <div class="event-venue">
+
+                                📍
+                                <span th:text="${event.venue}">
+                                    Venue
+                                </span>
+
+                            </div>
+
+                            <div class="event-details-box">
+
+                                <div class="activity-count">
+
+                                    <span class="activity-icon">
+                                        🎯
+                                    </span>
+
+                                    <div>
+
+                                        <div class="activity-number"
+                                             th:text="${subEventCounts[event.eventId]}">
+                                            0
+                                        </div>
+
+                                        <div class="activity-label">
+                                            Activities Available
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <button class="btn btn-secondary closed-button"
+                                    disabled>
+
+                                Schedule Not Available
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </th:block>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= EMPTY STATE ================= -->
+
+    <div class="empty-events"
+         th:if="${events == null || events.isEmpty()}">
+
+        <div class="empty-icon">
+            📅
+        </div>
+
+        <h4>
+            No Events Available
+        </h4>
+
+        <p class="text-muted">
+            There are currently no college events available.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

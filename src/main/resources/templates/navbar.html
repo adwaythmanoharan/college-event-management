@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<nav th:fragment="studentNavbar"
+     class="navbar navbar-dark bg-primary">
+
+    <div class="container">
+
+        <!-- ================= BRAND ================= -->
+
+        <a class="navbar-brand fw-bold"
+           href="/event-list">
+
+            CampusConnect
+
+        </a>
+
+
+        <div class="d-flex align-items-center">
+
+
+            <!-- ================= WELCOME STUDENT ================= -->
+
+            <span class="text-white me-3">
+
+                Welcome,
+
+                <strong th:text="${studentName}">
+                    Student
+                </strong>!
+
+            </span>
+
+
+            <!-- ================= EVENTS ================= -->
+
+            <a href="/event-list"
+               class="btn btn-light btn-sm me-2">
+
+                Events
+
+            </a>
+
+
+            <!-- ================= MY REGISTRATIONS ================= -->
+
+            <a href="/registration-list"
+               class="btn btn-light btn-sm me-2">
+
+                My Registrations
+
+            </a>
+
+
+            <!-- ================= NOTIFICATIONS ================= -->
+
+            <div class="dropdown me-2">
+
+
+                <!-- Notification Bell -->
+
+                <button class="btn btn-outline-light position-relative"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+
+                    🔔
+
+
+                    <!-- Unread Count -->
+
+                    <span th:if="${unreadCount > 0}"
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                        <span th:text="${unreadCount}">
+                            1
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <!-- ================= NOTIFICATION DROPDOWN ================= -->
+
+                <ul class="dropdown-menu dropdown-menu-end shadow"
+                    style="width: 420px; max-width: 90vw; max-height: 450px; overflow-y: auto;">
+
+
+                    <!-- Header -->
+
+                    <li>
+
+                        <h6 class="dropdown-header fs-6">
+
+                            Notifications
+
+                        </h6>
+
+                    </li>
+
+
+                    <!-- ================= NO NOTIFICATIONS ================= -->
+
+                    <li th:if="${notifications == null || notifications.isEmpty()}">
+
+                        <div class="dropdown-item text-muted text-center py-4">
+
+                            No notifications
+
+                        </div>
+
+                    </li>
+
+
+                    <!-- ================= NOTIFICATION LIST ================= -->
+
+                    <li th:each="notification : ${notifications}"
+                        th:id="'notification-' + ${notification.notificationId}">
+
+
+                        <div class="dropdown-item position-relative py-3 px-3"
+                             th:classappend="${!notification.read ? 'bg-light' : ''}">
+
+
+                            <!-- ================= CLOSE BUTTON ================= -->
+
+                            <a th:href="@{/notifications/delete/{id}(id=${notification.notificationId})}"
+                               class="position-absolute top-0 end-0 mt-2 me-2 text-decoration-none text-secondary"
+                               style="font-size: 18px; line-height: 1;"
+                               title="Remove notification">
+
+                                ×
+
+                            </a>
+
+
+                            <!-- ================= NOTIFICATION CONTENT ================= -->
+
+                            <div class="pe-4">
+
+
+                                <!-- ================= TITLE ================= -->
+
+                                <div class="d-flex align-items-center mb-1">
+
+                                    <span class="me-2">
+
+                                        🔔
+
+                                    </span>
+
+                                    <span class="fw-semibold">
+
+                                        Notification
+
+                                    </span>
+
+
+                                    <!-- New Badge -->
+
+                                    <span th:if="${!notification.read}"
+                                          class="badge bg-primary ms-2">
+
+                                        New
+
+                                    </span>
+
+                                </div>
+
+
+                                <!-- ================= MESSAGE ================= -->
+
+                                <div class="text-muted small mb-1"
+                                     th:text="${notification.message}">
+
+                                    Registration successful for Vadamvali
+
+                                </div>
+
+
+                                <!-- ================= DATE + TIME ================= -->
+
+                                <div class="text-secondary"
+                                     style="font-size: 12px;"
+                                     th:if="${notification.createdAt != null}"
+                                     th:text="${#temporals.format(notification.createdAt, 'dd MMM yyyy, hh:mm a')}">
+
+                                    15 Sep 2026, 08:30 PM
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+
+                    <!-- ================= MARK ALL AS READ ================= -->
+
+                    <li th:if="${notifications != null && !notifications.isEmpty()}">
+
+                        <hr class="dropdown-divider my-1">
+
+                    </li>
+
+
+                    <li th:if="${unreadCount > 0}">
+
+                        <a href="/notifications/read"
+                           class="dropdown-item text-center text-primary py-2">
+
+                            Mark all as read
+
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+            </div>
+
+
+            <!-- ================= LOGOUT ================= -->
+
+            <a href="/logout"
+               class="btn btn-outline-light btn-sm">
+
+                Logout
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</nav>
+
+</html>
